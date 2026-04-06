@@ -44,8 +44,15 @@ Open-source, agent-first SEO toolkit — keyword research, rank tracking, site a
 
 ### CLI
 
+**One-liner install** (installs Node.js automatically if missing):
+
 ```bash
-# Install
+curl -fsSL https://raw.githubusercontent.com/yagomp/seoagent/main/scripts/install.sh | sh
+```
+
+Or, if you already have Node.js >= 20:
+
+```bash
 npm install -g seoagent
 
 # Setup
