@@ -1,6 +1,25 @@
 # SEOAgent
 
+[![Latest Release](https://img.shields.io/github/v/release/yagomp/seoagent?label=release&color=brightgreen)](https://github.com/yagomp/seoagent/releases)
+[![GitHub Stars](https://img.shields.io/github/stars/yagomp/seoagent?style=flat&color=yellow)](https://github.com/yagomp/seoagent/stargazers)
+[![npm downloads](https://img.shields.io/npm/dt/seoagent?label=downloads&color=blue)](https://www.npmjs.com/package/seoagent)
+[![Node.js](https://img.shields.io/badge/node-%3E%3D20-brightgreen)](https://nodejs.org)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 Open-source, agent-first SEO toolkit — keyword research, rank tracking, site audits, competitor analysis, content gap analysis, domain reputation, and AI-powered strategy generation. Built for AI agents first, humans second.
+
+## Table of Contents
+
+- [Features](#features)
+- [Interfaces](#interfaces)
+- [Quick Start](#quick-start)
+  - [CLI](#cli)
+  - [MCP Server](#mcp-server-for-ai-agents)
+  - [Dashboard](#dashboard)
+- [Data Sources](#data-sources)
+- [Configuration](#configuration)
+- [Development](#development)
+- [License](#license)
 
 ## Features
 
