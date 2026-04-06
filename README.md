@@ -12,6 +12,7 @@ Open-source, agent-first SEO toolkit — keyword research, rank tracking, site a
 
 - [Features](#features)
 - [Interfaces](#interfaces)
+- [Ask Your Agent](#ask-your-agent)
 - [Quick Start](#quick-start)
   - [CLI](#cli)
   - [MCP Server](#mcp-server-for-ai-agents)
@@ -39,6 +40,111 @@ Open-source, agent-first SEO toolkit — keyword research, rank tracking, site a
 | **MCP Server** | `npx seoagent-mcp` — 24 tools for AI agents (Claude, Cursor, etc.) |
 | **Dashboard** | `seoagent dashboard` — local web UI at http://localhost:3847 |
 | **Library** | `@seoagent/core` — import functions directly in your code |
+
+## Ask Your Agent
+
+Once SEOAgent is connected via MCP, just talk to your AI agent naturally. Here are prompts that work well:
+
+### Site Audit
+
+```
+Do a full audit of mysite.com and tell me what SEO issues to fix first.
+```
+```
+Crawl mysite.com and find all broken links, missing meta descriptions, and pages with thin content.
+```
+```
+Which pages on my site have duplicate title tags?
+```
+```
+Are there any redirect chains or orphan pages on mysite.com?
+```
+
+### Keyword Research & Rank Tracking
+
+```
+Research keywords for "fantasy football app" and show me volume and difficulty.
+```
+```
+What keyword suggestions do you have for my niche around project management tools?
+```
+```
+Start tracking these keywords for my project: "best fpl app", "fpl tips", "fantasy premier league"
+```
+```
+Check current rankings for all tracked keywords and show me what moved this week.
+```
+```
+Which keywords did I gain or lose positions on since last check?
+```
+
+### Competitor Analysis
+
+```
+Compare my site against competitor.com — where do they rank that I don't?
+```
+```
+What are the content gaps between my site and competitor.com?
+```
+```
+Show me which keywords competitor.com ranks for that I'm missing.
+```
+
+### Backlinks & Domain Reputation
+
+```
+What's the domain reputation score for mysite.com?
+```
+```
+Show me the backlink profile for mysite.com — referring domains, top links.
+```
+```
+Find link building opportunities for my site based on competitor backlinks.
+```
+```
+Has my domain reputation changed over the last 30 days?
+```
+
+### Google Search Console
+
+```
+What are my top 10 pages by clicks in Search Console this month?
+```
+```
+Which queries get the most impressions but have low CTR? Those are quick wins.
+```
+```
+Show me GSC performance for the last 3 months — clicks, impressions, average position.
+```
+
+### Strategy
+
+```
+Generate an SEO strategy for mysite.com based on current audit results and keyword data.
+```
+```
+My site is in the fantasy football niche. What should I focus on for the next 90 days?
+```
+```
+Refresh my SEO strategy — we've fixed the audit issues and added new content since last time.
+```
+```
+Give me a prioritized action plan: what will move the needle fastest?
+```
+
+### Combined / Deep Dives
+
+```
+Do a complete SEO health check on mysite.com: crawl it, check rankings, pull GSC data, and give me a strategy.
+```
+```
+I just launched mysite.com. Walk me through setting up SEOAgent and getting my first audit and keyword plan.
+```
+```
+My organic traffic dropped 20% last month. Help me diagnose why using audit data and rank history.
+```
+
+---
 
 ## Quick Start
 
