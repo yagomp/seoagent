@@ -2,6 +2,7 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { resolveProject } from "../project-resolver.js";
+import { withProjectDb } from "../helpers.js";
 
 export function registerStrategyTools(server: McpServer): void {
   server.tool(
@@ -13,7 +14,15 @@ export function registerStrategyTools(server: McpServer): void {
     async ({ project }) => {
       const slug = resolveProject(project);
       const { strategyGenerate } = await import("@seoagent/core");
-      const result = await strategyGenerate({ project: slug });
+      const result = await withProjectDb(slug, async (proj, db) => {
+        return strategyGenerate(db, {
+          domain: proj.domain,
+          name: proj.name,
+          niche: proj.niche,
+          competitors: proj.competitors,
+          locale: proj.locale,
+        });
+      });
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };
@@ -29,7 +38,15 @@ export function registerStrategyTools(server: McpServer): void {
     async ({ project }) => {
       const slug = resolveProject(project);
       const { strategyRefresh } = await import("@seoagent/core");
-      const result = await strategyRefresh({ project: slug });
+      const result = await withProjectDb(slug, async (proj, db) => {
+        return strategyRefresh(db, {
+          domain: proj.domain,
+          name: proj.name,
+          niche: proj.niche,
+          competitors: proj.competitors,
+          locale: proj.locale,
+        });
+      });
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };

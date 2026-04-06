@@ -2,6 +2,7 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { resolveProject } from "../project-resolver.js";
+import { withProjectDb } from "../helpers.js";
 
 export function registerKeywordTools(server: McpServer): void {
   server.tool(
@@ -14,8 +15,11 @@ export function registerKeywordTools(server: McpServer): void {
     },
     async ({ keywords, locale, project }) => {
       const slug = resolveProject(project);
-      const { keywordResearch } = await import("@seoagent/core");
-      const result = await keywordResearch({ keywords, locale, project: slug });
+      const { keywordResearch, createProvider } = await import("@seoagent/core");
+      const result = await withProjectDb(slug, async (proj, db) => {
+        const provider = createProvider();
+        return keywordResearch(db, provider, keywords, locale ?? proj.locale);
+      });
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };
@@ -33,8 +37,11 @@ export function registerKeywordTools(server: McpServer): void {
     },
     async ({ seed, locale, limit, project }) => {
       const slug = resolveProject(project);
-      const { keywordSuggestions } = await import("@seoagent/core");
-      const result = await keywordSuggestions({ seed, locale, limit, project: slug });
+      const { keywordSuggestions, createProvider } = await import("@seoagent/core");
+      const result = await withProjectDb(slug, async (proj, db) => {
+        const provider = createProvider();
+        return keywordSuggestions(db, provider, seed, locale ?? proj.locale, limit);
+      });
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };

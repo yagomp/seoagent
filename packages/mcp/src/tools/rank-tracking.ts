@@ -2,6 +2,7 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { resolveProject } from "../project-resolver.js";
+import { withProjectDb, getProjectProvider } from "../helpers.js";
 
 export function registerRankTrackingTools(server: McpServer): void {
   server.tool(
@@ -14,9 +15,11 @@ export function registerRankTrackingTools(server: McpServer): void {
     async ({ keywords, project }) => {
       const slug = resolveProject(project);
       const { rankTrackAdd } = await import("@seoagent/core");
-      const result = await rankTrackAdd({ keywords, project: slug });
+      await withProjectDb(slug, (proj, db) => {
+        rankTrackAdd(db, keywords, proj.locale);
+      });
       return {
-        content: [{ type: "text" as const, text: JSON.stringify(result) }],
+        content: [{ type: "text" as const, text: JSON.stringify({ added: keywords.length, keywords }) }],
       };
     }
   );
@@ -29,8 +32,11 @@ export function registerRankTrackingTools(server: McpServer): void {
     },
     async ({ project }) => {
       const slug = resolveProject(project);
-      const { rankTrackCheck } = await import("@seoagent/core");
-      const result = await rankTrackCheck({ project: slug });
+      const { rankTrackCheck, createProvider } = await import("@seoagent/core");
+      const result = await withProjectDb(slug, async (proj, db) => {
+        const provider = createProvider();
+        return rankTrackCheck(db, provider, proj.domain, proj.locale);
+      });
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };
@@ -48,7 +54,32 @@ export function registerRankTrackingTools(server: McpServer): void {
     async ({ keyword, days, project }) => {
       const slug = resolveProject(project);
       const { rankTrackHistory } = await import("@seoagent/core");
-      const result = await rankTrackHistory({ keyword, days, project: slug });
+      const result = await withProjectDb(slug, (proj, db) => {
+        if (keyword) {
+          const history = rankTrackHistory(db, keyword, proj.locale);
+          const cutoff = days
+            ? new Date(Date.now() - days * 86400000).toISOString()
+            : null;
+          const filtered = cutoff
+            ? history.filter((e) => e.checkedAt >= cutoff)
+            : history;
+          return [{ keyword, history: filtered }];
+        }
+        // Return history for all tracked keywords
+        const tracked = db
+          .prepare("SELECT keyword FROM keywords WHERE tracked = 1 AND locale = ?")
+          .all(proj.locale) as { keyword: string }[];
+        const cutoff = days
+          ? new Date(Date.now() - days * 86400000).toISOString()
+          : null;
+        return tracked.map(({ keyword: kw }) => {
+          const history = rankTrackHistory(db, kw, proj.locale);
+          const filtered = cutoff
+            ? history.filter((e) => e.checkedAt >= cutoff)
+            : history;
+          return { keyword: kw, history: filtered };
+        });
+      });
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };
@@ -64,7 +95,9 @@ export function registerRankTrackingTools(server: McpServer): void {
     async ({ project }) => {
       const slug = resolveProject(project);
       const { rankTrackReport } = await import("@seoagent/core");
-      const result = await rankTrackReport({ project: slug });
+      const result = await withProjectDb(slug, (proj, db) => {
+        return rankTrackReport(db, proj.locale);
+      });
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };

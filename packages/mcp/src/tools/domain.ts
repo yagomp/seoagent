@@ -2,6 +2,7 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { resolveProject } from "../project-resolver.js";
+import { resolveProjectOrThrow, withProjectDb } from "../helpers.js";
 
 export function registerDomainTools(server: McpServer): void {
   server.tool(
@@ -13,8 +14,13 @@ export function registerDomainTools(server: McpServer): void {
     },
     async ({ domain, project }) => {
       const slug = resolveProject(project);
-      const { domainReputation } = await import("@seoagent/core");
-      const result = await domainReputation({ domain, project: slug });
+      const { domainReputation, getConfigValue } = await import("@seoagent/core");
+      const result = await withProjectDb(slug, async (proj, db) => {
+        const login = getConfigValue("dataforseo.login") as string;
+        const password = getConfigValue("dataforseo.password") as string;
+        if (!login || !password) throw new Error("DataForSEO credentials not configured.");
+        return domainReputation(domain ?? proj.domain, db, { login, password });
+      });
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };
@@ -31,7 +37,9 @@ export function registerDomainTools(server: McpServer): void {
     async ({ days, project }) => {
       const slug = resolveProject(project);
       const { domainReputationHistory } = await import("@seoagent/core");
-      const result = await domainReputationHistory({ days, project: slug });
+      const result = await withProjectDb(slug, (_proj, db) => {
+        return domainReputationHistory(db, days ? { limit: days } : {});
+      });
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };
@@ -48,8 +56,17 @@ export function registerDomainTools(server: McpServer): void {
     },
     async ({ domain, limit, project }) => {
       const slug = resolveProject(project);
-      const { backlinkProfile } = await import("@seoagent/core");
-      const result = await backlinkProfile({ domain, limit, project: slug });
+      const { backlinkProfile, getConfigValue } = await import("@seoagent/core");
+      const result = await withProjectDb(slug, async (proj, db) => {
+        const login = getConfigValue("dataforseo.login") as string;
+        const password = getConfigValue("dataforseo.password") as string;
+        if (!login || !password) throw new Error("DataForSEO credentials not configured.");
+        const profile = await backlinkProfile(domain ?? proj.domain, db, { login, password });
+        if (limit !== undefined) {
+          profile.topDomains = profile.topDomains.slice(0, limit);
+        }
+        return profile;
+      });
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };
@@ -66,8 +83,16 @@ export function registerDomainTools(server: McpServer): void {
     },
     async ({ competitors, limit, project }) => {
       const slug = resolveProject(project);
-      const { backlinkOpportunities } = await import("@seoagent/core");
-      const result = await backlinkOpportunities({ competitors, limit, project: slug });
+      const { backlinkOpportunities, getConfigValue } = await import("@seoagent/core");
+      const proj = resolveProjectOrThrow(slug);
+      const login = getConfigValue("dataforseo.login") as string;
+      const password = getConfigValue("dataforseo.password") as string;
+      if (!login || !password) throw new Error("DataForSEO credentials not configured.");
+      const competitorList = competitors ?? proj.competitors ?? [];
+      let result = await backlinkOpportunities(proj.domain, competitorList, { login, password });
+      if (limit !== undefined) {
+        result = result.slice(0, limit);
+      }
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };

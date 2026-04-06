@@ -1,6 +1,6 @@
 {
   "name": "@seoagent/cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Agent-first SEO toolkit — keyword research, rank tracking, site audits, competitor analysis, backlink intelligence, and AI-powered strategy generation",
   "type": "module",
   "bin": {

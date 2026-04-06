@@ -5,25 +5,36 @@ import { createServer } from "../server.js";
 
 // Mock @seoagent/core
 vi.mock("@seoagent/core", () => ({
-  listProjects: vi.fn().mockResolvedValue([
+  listProjects: vi.fn().mockReturnValue([
     { slug: "my-blog", domain: "myblog.com", name: "My Blog" },
     { slug: "fplai", domain: "fplai.app", name: "FPLai" },
   ]),
-  addProject: vi.fn().mockResolvedValue({
-    slug: "new-site",
-    domain: "newsite.com",
-    name: "New Site",
+  addProject: vi.fn().mockReturnValue(undefined),
+  setConfigValue: vi.fn().mockReturnValue(undefined),
+  getActiveProject: vi.fn().mockReturnValue("test-project"),
+  getProject: vi.fn().mockReturnValue({
+    slug: "test-project",
+    config: { domain: "test.com", name: "Test Project", locale: "en-US" },
   }),
-  setConfigValue: vi.fn().mockResolvedValue(undefined),
-  keywordResearch: vi.fn().mockResolvedValue({
-    keywords: [
-      { keyword: "fpl tips", volume: 12000, difficulty: 45 },
-    ],
+  openDatabase: vi.fn().mockReturnValue({
+    prepare: () => ({ run: () => {}, all: () => [] }),
+    transaction: (fn: (arg: unknown[]) => unknown) => fn,
+    close: () => {},
   }),
+  closeDatabase: vi.fn(),
+  getDbPath: vi.fn().mockReturnValue("/tmp/test.db"),
+  createProvider: vi.fn().mockReturnValue({
+    getKeywordVolume: vi.fn().mockResolvedValue([]),
+    getKeywordSuggestions: vi.fn().mockResolvedValue([]),
+  }),
+  keywordResearch: vi.fn().mockResolvedValue([
+    { keyword: "fpl tips", volume: 12000, difficulty: 45 },
+  ]),
   auditCrawl: vi.fn().mockResolvedValue({
     pagesCrawled: 50,
     issuesFound: 12,
   }),
+  auditReport: vi.fn().mockReturnValue({ totalPages: 0, issuesByType: {}, brokenLinks: [], duplicateTitles: [], orphanPages: [] }),
 }));
 
 async function createTestClient() {
@@ -68,11 +79,7 @@ describe("Tool Handlers", () => {
     });
     const data = parseToolResult(result as any);
 
-    expect(data).toEqual({
-      slug: "new-site",
-      domain: "newsite.com",
-      name: "New Site",
-    });
+    expect(data).toEqual({ ok: true, slug: "new-site", domain: "newsite.com" });
   });
 
   it("seoagent_config_set returns ok", async () => {
@@ -94,9 +101,9 @@ describe("Tool Handlers", () => {
     });
     const data = parseToolResult(result as any) as any;
 
-    expect(data.keywords).toHaveLength(1);
-    expect(data.keywords[0].keyword).toBe("fpl tips");
-    expect(data.keywords[0].volume).toBe(12000);
+    expect(Array.isArray(data)).toBe(true);
+    expect(data[0].keyword).toBe("fpl tips");
+    expect(data[0].volume).toBe(12000);
   });
 
   it("seoagent_audit_crawl returns crawl summary", async () => {

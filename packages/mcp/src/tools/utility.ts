@@ -46,7 +46,7 @@ export function registerUtilityTools(server: McpServer): void {
     },
     async ({ slug, domain, name, niche, locale, competitors }) => {
       const { addProject } = await import("@seoagent/core");
-      const project = await addProject(slug, {
+      addProject(slug, {
         domain,
         name: name ?? slug,
         niche,
@@ -54,7 +54,7 @@ export function registerUtilityTools(server: McpServer): void {
         competitors,
       });
       return {
-        content: [{ type: "text" as const, text: JSON.stringify(project) }],
+        content: [{ type: "text" as const, text: JSON.stringify({ ok: true, slug, domain }) }],
       };
     }
   );

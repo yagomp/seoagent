@@ -2,6 +2,7 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { resolveProject } from "../project-resolver.js";
+import { resolveProjectOrThrow } from "../helpers.js";
 
 export function registerCompetitorTools(server: McpServer): void {
   server.tool(
@@ -15,8 +16,13 @@ export function registerCompetitorTools(server: McpServer): void {
     },
     async ({ domain, locale, limit, project }) => {
       const slug = resolveProject(project);
-      const { competitorKeywords } = await import("@seoagent/core");
-      const result = await competitorKeywords({ domain, locale, limit, project: slug });
+      const { competitorKeywords, createProvider } = await import("@seoagent/core");
+      const proj = resolveProjectOrThrow(slug);
+      const provider = createProvider();
+      let result = await competitorKeywords(provider, domain, locale ?? proj.locale);
+      if (limit !== undefined) {
+        result = result.slice(0, limit);
+      }
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };
@@ -32,8 +38,10 @@ export function registerCompetitorTools(server: McpServer): void {
     },
     async ({ competitor, project }) => {
       const slug = resolveProject(project);
-      const { competitorCompare } = await import("@seoagent/core");
-      const result = await competitorCompare({ competitor, project: slug });
+      const { competitorCompare, createProvider } = await import("@seoagent/core");
+      const proj = resolveProjectOrThrow(slug);
+      const provider = createProvider();
+      const result = await competitorCompare(provider, proj.domain, competitor, proj.locale);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };

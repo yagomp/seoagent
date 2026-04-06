@@ -2,6 +2,7 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { resolveProject } from "../project-resolver.js";
+import { resolveProjectOrThrow } from "../helpers.js";
 
 export function registerGscTools(server: McpServer): void {
   server.tool(
@@ -16,7 +17,8 @@ export function registerGscTools(server: McpServer): void {
     async ({ days, startDate, endDate, project }) => {
       const slug = resolveProject(project);
       const { gscPerformance } = await import("@seoagent/core");
-      const result = await gscPerformance({ days, startDate, endDate, project: slug });
+      const proj = resolveProjectOrThrow(slug);
+      const result = await gscPerformance(proj.slug, { days, startDate, endDate });
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };
@@ -35,7 +37,8 @@ export function registerGscTools(server: McpServer): void {
     async ({ days, sort, limit, project }) => {
       const slug = resolveProject(project);
       const { gscPages } = await import("@seoagent/core");
-      const result = await gscPages({ days, sort, limit, project: slug });
+      const proj = resolveProjectOrThrow(slug);
+      const result = await gscPages(proj.slug, { days, sort, limit });
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };
@@ -54,7 +57,8 @@ export function registerGscTools(server: McpServer): void {
     async ({ days, sort, limit, project }) => {
       const slug = resolveProject(project);
       const { gscQueries } = await import("@seoagent/core");
-      const result = await gscQueries({ days, sort, limit, project: slug });
+      const proj = resolveProjectOrThrow(slug);
+      const result = await gscQueries(proj.slug, { days, sort, limit });
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result) }],
       };
