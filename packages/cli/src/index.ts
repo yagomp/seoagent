@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { createRequire } from "node:module";
 import { Command } from "commander";
 import { registerProjectCommands } from "./commands/project.js";
 import { registerKeywordsCommands } from "./commands/keywords.js";
@@ -11,12 +12,15 @@ import { registerGscCommands } from "./commands/gsc.js";
 import { registerConfigCommands } from "./commands/config.js";
 import { registerDashboardCommand } from "./commands/dashboard.js";
 
+const require = createRequire(import.meta.url);
+const { version } = require("../package.json") as { version: string };
+
 const program = new Command();
 
 program
   .name("seoagent")
   .description("Agent-first SEO toolkit — audits, keywords, rank tracking, competitors, backlinks, strategy")
-  .version("0.1.0")
+  .version(version)
   .option("--format <format>", "Output format: table, json, markdown", "table");
 
 registerProjectCommands(program);

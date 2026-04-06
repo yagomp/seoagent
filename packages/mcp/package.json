@@ -1,6 +1,6 @@
 {
   "name": "seoagent-mcp",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "MCP server for SEOAgent — 24 tools for AI agents to perform keyword research, rank tracking, site audits, competitor analysis, backlink intelligence, and SEO strategy generation",
   "type": "module",
   "bin": {
