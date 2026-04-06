@@ -1,0 +1,19 @@
+This is SEOAgent, an open-source agent-first SEO toolkit.
+
+Architecture: TypeScript pnpm monorepo with 4 packages.
+- packages/core/ — ALL business logic lives here. Start here for any feature.
+- packages/cli/ — commander.js CLI, thin wrapper over core
+- packages/mcp/ — MCP server (24 tools), thin wrapper over core
+- packages/dashboard/ — Vite + React + Tailwind local web UI
+
+Key files:
+- packages/core/src/index.ts — barrel export (public API)
+- packages/core/src/types.ts — shared types
+- packages/core/src/schema.ts — SQLite schema (9 tables)
+- packages/core/src/__tests__/ — all core tests (231 tests)
+
+Workflow: TDD. Write test first, implement, verify, export from index.ts.
+Tests use vitest with globals. Mock HTTP calls, use SEOAGENT_HOME env var for temp dirs.
+Build: pnpm build. Test: pnpm test.
+
+See AGENTS.md for full function reference and patterns.

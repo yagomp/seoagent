@@ -1,0 +1,21 @@
+{
+  "name": "seoagent-mcp",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "seoagent-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@seoagent/core": "workspace:*",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "vitest": "^3.1.0"
+  }
+}

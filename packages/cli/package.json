@@ -1,0 +1,28 @@
+{
+  "name": "seoagent",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "seoagent": "./dist/index.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@seoagent/core": "workspace:*",
+    "commander": "^13.0.0"
+  },
+  "devDependencies": {
+    "vitest": "^3.1.0",
+    "tsx": "^4.19.0"
+  }
+}

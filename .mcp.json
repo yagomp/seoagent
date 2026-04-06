@@ -1,0 +1,6 @@
+{
+  "seoagent": {
+    "command": "node",
+    "args": ["/Users/yago/Documents/seoagent/packages/mcp/dist/index.js"]
+  }
+}

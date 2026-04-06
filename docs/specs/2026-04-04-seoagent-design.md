@@ -6,7 +6,7 @@
 
 ## Overview
 
-SEOAgent is an open-source, agent-first SEO toolkit. It replaces the core functionality of Ahrefs/Semrush — keyword research, rank tracking, site audits, competitor analysis, content gap analysis, domain reputation, and strategy generation — at a fraction of the cost.
+SEOAgent is an open-source, agent-first SEO toolkit — keyword research, rank tracking, site audits, competitor analysis, content gap analysis, domain reputation, and strategy generation.
 
 The primary interface is programmatic: an MCP server and CLI that AI agents (Claude Code, Codex, Cursor, etc.) can use to analyze, diagnose, and fix SEO issues autonomously. A lightweight local web dashboard provides human-readable visualization.
 
