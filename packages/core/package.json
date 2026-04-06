@@ -1,6 +1,7 @@
 {
   "name": "@seoagent/core",
   "version": "0.1.0",
+  "description": "Core library for SEOAgent — keyword research, rank tracking, site audits, competitor analysis, backlink intelligence, and AI-powered SEO strategy",
   "type": "module",
   "exports": {
     ".": {
@@ -8,23 +9,49 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yagomp/seoagent.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/yagomp/seoagent#readme",
+  "license": "MIT",
+  "keywords": [
+    "seo",
+    "keyword-research",
+    "rank-tracking",
+    "site-audit",
+    "backlinks",
+    "competitor-analysis",
+    "mcp",
+    "ai-agents"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.82.0",
     "better-sqlite3": "^11.0.0",
     "cheerio": "^1.0.0",
     "google-auth-library": "^10.6.2",
     "googleapis": "^171.4.0",
+    "openai": "^6.33.0",
     "undici": "^7.24.7",
     "zod": "^3.24.0"
   },
   "devDependencies": {
-    "@anthropic-ai/sdk": "^0.82.0",
     "@types/better-sqlite3": "^7.6.0",
-    "openai": "^6.33.0",
     "vitest": "^3.1.0"
   }
 }

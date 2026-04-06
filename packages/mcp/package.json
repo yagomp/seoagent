@@ -1,10 +1,35 @@
 {
   "name": "seoagent-mcp",
   "version": "0.1.0",
+  "description": "MCP server for SEOAgent — 24 tools for AI agents to perform keyword research, rank tracking, site audits, competitor analysis, backlink intelligence, and SEO strategy generation",
   "type": "module",
   "bin": {
     "seoagent-mcp": "./dist/index.js"
   },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yagomp/seoagent.git",
+    "directory": "packages/mcp"
+  },
+  "homepage": "https://github.com/yagomp/seoagent#readme",
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "seo",
+    "ai-agents",
+    "keyword-research",
+    "rank-tracking",
+    "site-audit",
+    "claude",
+    "cursor"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "vitest run",

@@ -1,9 +1,13 @@
 {
-  "name": "seoagent",
+  "name": "@seoagent/cli",
   "version": "0.1.0",
+  "description": "Agent-first SEO toolkit — keyword research, rank tracking, site audits, competitor analysis, backlink intelligence, and AI-powered strategy generation",
   "type": "module",
   "bin": {
     "seoagent": "./dist/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "exports": {
     ".": {
@@ -11,6 +15,29 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yagomp/seoagent.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/yagomp/seoagent#readme",
+  "license": "MIT",
+  "keywords": [
+    "seo",
+    "cli",
+    "keyword-research",
+    "rank-tracking",
+    "site-audit",
+    "backlinks",
+    "competitor-analysis",
+    "ai-agents"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "vitest run",

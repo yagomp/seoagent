@@ -2,7 +2,7 @@
 
 [![Latest Release](https://img.shields.io/github/v/release/yagomp/seoagent?label=release&color=brightgreen)](https://github.com/yagomp/seoagent/releases)
 [![GitHub Stars](https://img.shields.io/github/stars/yagomp/seoagent?style=flat&color=yellow)](https://github.com/yagomp/seoagent/stargazers)
-[![npm downloads](https://img.shields.io/npm/dt/seoagent?label=downloads&color=blue)](https://www.npmjs.com/package/seoagent)
+[![npm downloads](https://img.shields.io/npm/dt/@seoagent/cli?label=downloads&color=blue)](https://www.npmjs.com/package/@seoagent/cli)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D20-brightgreen)](https://nodejs.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
@@ -35,7 +35,7 @@ Open-source, agent-first SEO toolkit — keyword research, rank tracking, site a
 
 | Interface | Description |
 |-----------|-------------|
-| **CLI** | `npm install -g seoagent` — full command-line toolkit |
+| **CLI** | `npm install -g @seoagent/cli` — full command-line toolkit |
 | **MCP Server** | `npx seoagent-mcp` — 24 tools for AI agents (Claude, Cursor, etc.) |
 | **Dashboard** | `seoagent dashboard` — local web UI at http://localhost:3847 |
 | **Library** | `@seoagent/core` — import functions directly in your code |
@@ -53,7 +53,7 @@ curl -fsSL https://raw.githubusercontent.com/yagomp/seoagent/main/scripts/instal
 Or, if you already have Node.js >= 20:
 
 ```bash
-npm install -g seoagent
+npm install -g @seoagent/cli
 
 # Setup
 seoagent project add mysite --domain example.com --niche "tech"

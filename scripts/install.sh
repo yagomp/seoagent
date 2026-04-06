@@ -69,7 +69,7 @@ cyan ""
 cyan "  Installing seoagent..."
 cyan ""
 
-npm install -g "seoagent@${SEOAGENT_VERSION}"
+npm install -g "@seoagent/cli@${SEOAGENT_VERSION}"
 
 # ── 4. Verify ─────────────────────────────────────────────────────────────────
 
