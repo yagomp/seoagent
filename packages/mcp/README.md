@@ -105,6 +105,20 @@ Which of my pages get the most impressions but low CTR in Search Console?
 My organic traffic dropped — help me diagnose why using audit data and rank history.
 ```
 
+## Updating
+
+`npx` fetches the latest version automatically. To force-refresh a cached version:
+
+```bash
+npx --yes seoagent-mcp@latest
+```
+
+Or clear the npx cache:
+
+```bash
+npx clear-npx-cache
+```
+
 ## Requirements
 
 - Node.js >= 20

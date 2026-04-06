@@ -1,6 +1,6 @@
 {
   "name": "@seoagent/core",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Core library for SEOAgent — keyword research, rank tracking, site audits, competitor analysis, backlink intelligence, and AI-powered SEO strategy",
   "type": "module",
   "exports": {

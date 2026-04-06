@@ -63,6 +63,12 @@ console.log(strategy.actions)
 - **Paid**: DataForSEO (~$0.001/query) for keyword volumes, SERP data, backlinks
 - **Derived**: content gaps, rank deltas, audit scores, strategy
 
+## Updating
+
+```bash
+npm install @seoagent/core@latest
+```
+
 ## Links
 
 - [GitHub](https://github.com/yagomp/seoagent)

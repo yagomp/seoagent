@@ -19,6 +19,7 @@ Open-source, agent-first SEO toolkit — keyword research, rank tracking, site a
   - [Dashboard](#dashboard)
 - [Data Sources](#data-sources)
 - [Configuration](#configuration)
+- [Updating](#updating)
 - [Development](#development)
 - [License](#license)
 
@@ -234,6 +235,42 @@ seoagent gsc auth --client-id YOUR_ID --client-secret YOUR_SECRET
 ```
 
 Config stored at `~/.seoagent/config.json`. Per-project data in `~/.seoagent/projects/<slug>/`.
+
+## Updating
+
+### CLI
+
+```bash
+npm install -g @seoagent/cli@latest
+```
+
+### MCP Server
+
+`npx` fetches the latest version automatically. To force-refresh a cached version:
+
+```bash
+npx --yes seoagent-mcp@latest
+```
+
+Or clear the npx cache entirely:
+
+```bash
+npx clear-npx-cache
+```
+
+### Library (`@seoagent/core`)
+
+```bash
+npm install @seoagent/core@latest
+```
+
+After updating the CLI, verify the installed version:
+
+```bash
+seoagent --version
+```
+
+---
 
 ## Development
 

@@ -102,6 +102,18 @@ seoagent config set KEY VALUE
 
 All commands support `--format table` (default), `--format json`, and `--format markdown`.
 
+## Updating
+
+```bash
+npm install -g @seoagent/cli@latest
+```
+
+Verify:
+
+```bash
+seoagent --version
+```
+
 ## Links
 
 - [GitHub](https://github.com/yagomp/seoagent)
